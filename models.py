@@ -8,10 +8,6 @@ class BaseModel(peewee.Model):
         database = db
 
 
-class Season(BaseModel):
-    year = peewee.IntegerField()
-
-
 class Team(BaseModel):
     id = peewee.CharField(max_length=3, primary_key=True)
 
@@ -35,6 +31,6 @@ class Performance(BaseModel):
 
 
 class Game(BaseModel):
-    home_performance = peewee.ForeignKeyField(Performance)
-    away_performance = peewee.ForeignKeyField(Performance)
+    home_performance = peewee.ForeignKeyField(Performance, related_name='home_games')
+    away_performance = peewee.ForeignKeyField(Performance, related_name='away_games')
     date = peewee.DateField()

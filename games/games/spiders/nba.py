@@ -56,7 +56,7 @@ class NbaSpider(scrapy.Spider):
             ]
 
             result = {stat_name: get_stat(stat_name) for stat_name in stats}
-            result['team_id'] = teams[0] if team == 'away' else teams[1]
+            result['team'] = teams[0] if team == 'away' else teams[1]
 
             return result
 
