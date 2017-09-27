@@ -16,9 +16,10 @@ def get_filenames():
 def get_games(filenames):
     games = []
 
-    with open(argv[1]) as infile:
-        data = load(infile)
-        games.extend(data)
+    for filename in filenames:
+        with open(filename) as infile:
+            data = load(infile)
+            games.extend(data)
 
     return games
 
