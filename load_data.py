@@ -1,15 +1,26 @@
 from datetime import datetime
 from json import load
 from sys import argv
+from argparse import ArgumentParser
 
 from models import Team, Performance, Game
 
 
-def get_games():
+def get_filenames():
+    parser = ArgumentParser(description='Load games to DB')
+    parser.add_argument('files', metavar='FILE', nargs='+', help='JSON fies with games info')
+
+    return parser.parse_args().files
+
+
+def get_games(filenames):
+    games = []
+
     with open(argv[1]) as infile:
         data = load(infile)
+        games.extend(data)
 
-    return data
+    return games
 
 
 def commit_games(games):
@@ -20,21 +31,24 @@ def commit_games(games):
         Team.get_or_create(id=home['team'])
         Team.get_or_create(id=away['team'])
 
-        home_performance = Performance.create(**home)
-        away_performance = Performance.create(**away)
         date_string = game['datetime'].split(',', 1)[1].strip()
         date = datetime.strptime(date_string, '%B %d, %Y')
+        game = Game.create(date=date)
 
-        Game.create(
-            home_performance=home_performance,
-            away_performance=away_performance,
-            date=date
-        )
+        home['game_id'] = game.id
+        away['game_id'] = game.id
+
+        home['type'] = Performance.HOME
+        away['type'] = Performance.AWAY
+
+        home_performance = Performance.create(**home)
+        away_performance = Performance.create(**away)
 
 
 def main():
-    games = get_games()
-    commit_games(games)
+    filenames = get_filenames()
+    games = get_games(filenames)
+    commit_games(games[:2])
 
 
 if __name__ == '__main__':

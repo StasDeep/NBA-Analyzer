@@ -12,8 +12,22 @@ class Team(BaseModel):
     id = peewee.CharField(max_length=3, primary_key=True)
 
 
+class Game(BaseModel):
+    date = peewee.DateField()
+
+
 class Performance(BaseModel):
+    HOME = 1
+    AWAY = 2
+    TYPES = [
+        (HOME, 'Home'),
+        (AWAY, 'Away')
+    ]
+
     team = peewee.ForeignKeyField(Team, related_name='performances')
+    game = peewee.ForeignKeyField(Game, related_name='performances')
+    type = peewee.IntegerField(choices=TYPES)
+
     pts = peewee.IntegerField()   # Points
     fg = peewee.IntegerField()    # Shots from game made
     fga = peewee.IntegerField()   # Shots from game attempted
@@ -28,9 +42,3 @@ class Performance(BaseModel):
     blk = peewee.IntegerField()   # Blocks
     tov = peewee.IntegerField()   # Turnovers
     pf = peewee.IntegerField()    # Personal fouls
-
-
-class Game(BaseModel):
-    home_performance = peewee.ForeignKeyField(Performance, related_name='home_games')
-    away_performance = peewee.ForeignKeyField(Performance, related_name='away_games')
-    date = peewee.DateField()
