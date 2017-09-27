@@ -41,14 +41,14 @@ def commit_games(games):
         home['type'] = Performance.HOME
         away['type'] = Performance.AWAY
 
-        home_performance = Performance.create(**home)
-        away_performance = Performance.create(**away)
+        Performance.create(**home)
+        Performance.create(**away)
 
 
 def main():
     filenames = get_filenames()
     games = get_games(filenames)
-    commit_games(games[:2])
+    commit_games(games)
 
 
 if __name__ == '__main__':
