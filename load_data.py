@@ -1,6 +1,7 @@
+#!/usr/bin/python3
+
 from datetime import datetime
 from json import load
-from sys import argv
 from argparse import ArgumentParser
 
 from models import Team, Performance, Game

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from models import Team, Performance, Game, db
 
 
