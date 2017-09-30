@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from csv import writer
 from datetime import datetime, timedelta
