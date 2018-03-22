@@ -103,5 +103,5 @@ ENV/
 # PyCharm
 .idea/
 
-# Database
-*.db
+# Data
+data/

@@ -1,0 +1,17 @@
+STATS_NAMES = [
+    'pts',
+    'fg',
+    'fga',
+    'fg3',
+    'fg3a',
+    'ft',
+    'fta',
+    'orb',
+    'drb',
+    'ast',
+    'stl',
+    'blk',
+    'tov',
+    'pf',
+    'mp',
+]
