@@ -26,7 +26,7 @@ class GamesSpider(scrapy.Spider):
 
     def parse_game(self, response):
         game_id = response.request.url.split('/')[-1][:-5]
-        date = response.css('.scorebox_meta div:first-child::text').extract_first().split(', ')[1]
+        date = response.css('.scorebox_meta div:first-child::text').extract_first().split(', ', 1)[1]
 
         away_bs, _, home_bs, _ = response.css('.stats_table tbody')
 
