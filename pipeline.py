@@ -2,9 +2,10 @@ import luigi
 from scrapy.crawler import CrawlerProcess
 
 from games_spider import GamesSpider
+from prepare import prepare_data_for_train
 
 
-class Games(luigi.Task):
+class ScrapedGames(luigi.Task):
     season = luigi.IntParameter(default=2017)
 
     def run(self):
@@ -14,6 +15,22 @@ class Games(luigi.Task):
 
     def output(self):
         return luigi.LocalTarget('data/games_{}.csv'.format(self.season))
+
+
+class PreparedGames(luigi.Task):
+    season = luigi.IntParameter(default=2017)
+
+    def requires(self):
+        return ScrapedGames(self.season)
+
+    def run(self):
+        data = prepare_data_for_train(self.input().path)
+
+        with self.output().open('w') as outfile:
+            outfile.write(data)
+
+    def output(self):
+        return luigi.LocalTarget('data/train_{}.csv'.format(self.season))
 
 
 if __name__ == '__main__':
