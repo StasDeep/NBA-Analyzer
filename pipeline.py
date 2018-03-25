@@ -33,5 +33,11 @@ class PreparedGames(luigi.Task):
         return luigi.LocalTarget('data/train_{}.csv'.format(self.season))
 
 
+class AllGames(luigi.Task):
+
+    def requires(self):
+        return [PreparedGames(season) for season in range(2000, 2018)]
+
+
 if __name__ == '__main__':
     luigi.run()

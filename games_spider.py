@@ -21,7 +21,12 @@ class GamesSpider(scrapy.Spider):
             yield response.follow(a_tag, callback=self.parse_month)
 
     def parse_month(self, response):
-        for a_tag in response.css('.stats_table tbody tr td:nth-child(7) a'):
+        box_score_links = response.css('.stats_table tbody tr td:nth-child(7) a')
+
+        if not box_score_links:
+            box_score_links = response.css('.stats_table tbody tr td:nth-child(6) a')
+
+        for a_tag in box_score_links:
             yield response.follow(a_tag, callback=self.parse_game)
 
     def parse_game(self, response):
