@@ -36,7 +36,7 @@ class PreparedGames(luigi.Task):
 class AllGames(luigi.Task):
 
     def requires(self):
-        return [PreparedGames(season) for season in range(2000, 2018)]
+        return [PreparedGames(season) for season in range(1990, 2018)]
 
 
 if __name__ == '__main__':

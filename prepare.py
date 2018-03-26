@@ -1,5 +1,7 @@
 import pandas as pd
 
+from constants import STATS_NAMES
+
 
 def prepare_data_for_train(filename):
     df = pd.read_csv(filename)
@@ -27,7 +29,9 @@ def prepare_data_for_train(filename):
                     (prev_five_games['game_id'] == prev_game_id) & (prev_five_games['player_id'] == player_id)]
                 performance = performance.assign(
                     is_home_now=game_players[game_players['player_id'] == player_id]['is_home'].astype(int).values)
-                players_df = players_df.append(performance[['game_id', 'player_id', 'pts', 'is_home', 'is_home_now']])
+                players_df = players_df.append(
+                    performance[['game_id', 'player_id', 'is_home', 'is_home_now'] + STATS_NAMES]
+                )
 
         if skip:
             print('SKIPPED GAME {} DUE TO {} HAS PLAYED IN {} GAMES'.format(game_id, player_id, len(prev_five_games)))
